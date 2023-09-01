@@ -1,0 +1,22 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000r\u0000J\u0000C\u0000h\u0000a\u0000t\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cclmal/PrJChat.git"
+  },
+  "author": "Zabdiel and itzjack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cclmal/PrJChat/issues"
+  },
+  "homepage": "https://github.com/cclmal/PrJChat#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
