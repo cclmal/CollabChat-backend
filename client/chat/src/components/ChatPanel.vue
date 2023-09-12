@@ -11,8 +11,6 @@
   
 <script>
 
-
-
 import Chatbar from './helpers/ChatBar.vue'
 import MessageList from './helpers/MessageList.vue'
 import MessageInput from './helpers/Messageinput.vue'
