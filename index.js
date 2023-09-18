@@ -1,13 +1,15 @@
 console.log('prueba');
 
-const Server = require('./models/Server')
+let server = require('./models/Server')
 
+let serverInstance = new server()
 
+serverInstance.get()
 
-const server = new Server()
-server.listen()
+serverInstance.connection()
 
+serverInstance.listen()
 
-module.exports = server.io
+// module.exports = server.io
 
 

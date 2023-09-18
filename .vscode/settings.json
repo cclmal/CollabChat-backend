@@ -3,5 +3,10 @@
         "activityBar.background": "#42252E",
         "titleBar.activeBackground": "#5C3441",
         "titleBar.activeForeground": "#FCF9FA"
-    }
+    },
+    "cSpell.words": [
+        "corriendo",
+        "prueba",
+        "Servidor"
+    ]
 }

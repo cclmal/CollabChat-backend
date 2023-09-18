@@ -1,30 +1,47 @@
 const express = require('express')
-const http = require('http');
-const socketIO = require('socket.io');
+const http = require('http')
+const { createServer } = require('node:http')
+const { join } = require('node:path')
+const { Server } = require('socket.io')
+
+const app = express()
+const server = http.createServer( app )
+const port = process.env.PORT || '3001'
+const io = new Server(server);
 
 
-class Server {
+class Servidor {
 
-
-    constructor(){
-        this.app = express()
-        this.server = http.createServer( this.app )
-        this.io = socketIO( this.server )
-        this.port = process.env.PORT || '3000'
-
-        this.middlewares()
+    // constructor(app, server, port, io){
+    //     this.middlewares()
+    // }
+    
+    get(){
+        app.get('/', (req, res) => {
+            res.sendFile('/index.html', { root: `${process.cwd()}` });
+          });
     }
 
+    connection(){
+        io.on('connection', (socket) => {
+            console.log('a user connected') 
+            // socket.on('disconnect', () => {
+            //     console.log('user disconnected');
+            //   })
+            socket.on('chat message', (msg) => {
+                io.emit('chat message', msg);
+              }); 
+          });
+    }
 
     middlewares(){
-        this.app.use( express.json() )
-        this.app.use( express.static('public'))
+        app.use( express.json() )
+        app.use( express.static('public'))
     }
 
-
     listen(){
-        this.server.listen( this.port, () => {
-            console.log('Servidor corriendo en el puerto', this.port )
+        server.listen( port, () => {
+            console.log('Servidor corriendo en el puerto', port )
         })
     }
 
@@ -32,4 +49,4 @@ class Server {
 
 
 
-module.exports = Server 
+module.exports = Servidor
