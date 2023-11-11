@@ -1,15 +1,8 @@
-console.log('prueba');
+const SocketServer = require('./models/Server')
 
-let server = require('./models/Server')
-
-let serverInstance = new server()
+const serverInstance = new SocketServer()
 
 serverInstance.get()
-
 serverInstance.connection()
-
 serverInstance.listen()
-
-// module.exports = server.io
-
 

@@ -15,10 +15,10 @@ const io = new Server(server, {
     }
   });
 
+class SocketServer {
 
-class Servidor {
-
-    constructor(app, server, port, io){
+    constructor(){
+        this.users = []
         this.middlewares()
     }
     
@@ -31,13 +31,32 @@ class Servidor {
     connection(){
         io.on('connection', (socket) => {
             console.log('a user connected') 
+
+            socket.on('login', (username) => {
+            
+                if ( this.users.find( userObj => userObj.username === username) ) {
+                    socket.emit('usernameTaken', `${username} is already taken!`);
+                } else {
+                    const user = { id: socket.id, username: username, color: this.getRandomColor() }
+                    this.users.push(user);
+                    socket.emit('userConnected', this.users);
+                    socket.broadcast.emit('userConnected', this.users);
+                }
+
+            })
+
             socket.on('disconnect', () => {
                 console.log('user disconnected');
+                const userIndex = this.users.findIndex( userObj => userObj.id === socket.id );
+                this.users.splice(userIndex, 1);
+                socket.broadcast.emit('userDisconnected', this.users);
+
               })
+
+
             socket.on('chat message', (msg) => {
-                console.log("Mensaje recibido:", msg);
                 socket.broadcast.emit('chat message', msg);
-                console.log("Mensaje emitido a todos los clientes:", msg);
+                // console.log("Message to all clients:", msg);
               }); 
           });
     }
@@ -55,8 +74,13 @@ class Servidor {
         })
     }
 
+    getRandomColor() {
+        // Generate a random hex color
+        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    }
+
 }
 
 
 
-module.exports = Servidor
+module.exports = SocketServer
